@@ -1,6 +1,5 @@
 #include <iostream>
 #include <map>
-#include <limits>
 using namespace std;
 
 //////////// Variables ////////////
@@ -26,14 +25,14 @@ char get_player();
 void validate_input(int &row, int &col);
 bool check_cell(int row, int col);
 bool check_number(int row, int col);
-void fill_grid(int row, int col);
+void mark_cell(int row, int col);
 bool get_status();
 void display_results();
 void play_again();
 void lowercase_word(string word);
 void refresh();
 
-
+//////////////////////////////////////////
 int main() {
     init_game();
     start_game();
@@ -72,12 +71,16 @@ void build_grid() {
 }
 
 void refresh() {
-//    clear_console();
+    clear_console();
     display_scores();
     render_grid();
 }
 
-void clear_console() {}
+void clear_console() {
+//    for(int i{}; i<10; i++)
+//        cout << "\n\n\n\n\n\n\n\n\n\n";
+    cout << "======================================================\n";
+}
 
 void display_scores() {
     cout << "Player O Score: " << player_O_score << endl;
@@ -96,7 +99,7 @@ void start_game() {
     while(!end_game) {
         int row, col;
         get_move(row,col);
-//        fill_grid(row, col);
+        mark_cell(row, col);
 
 //        end_game = get_status();
 //        if(end_game)
@@ -105,16 +108,14 @@ void start_game() {
 }
 
 void get_move(int &row, int &col) {
-    char player = get_player();
-    cout << "Player " << player << " turn" << endl;
+    turns++;
+    cout << "Player " << get_player() << " turn" << endl;
 
     cout << "Enter the row number: ";
     cin >> row;
     cout << "Enter the column number: ";
     cin >> col;
     validate_input(row, col);
-
-    turns++;
 }
 
 void validate_input(int &row, int &col) {
@@ -152,7 +153,12 @@ bool check_cell(int row, int col) {
     else return false;
 }
 
-
+void mark_cell(int row, int col) {
+    row = row_i[row];
+    col = col_i[col];
+    grid[row][col] = get_player();
+    refresh();
+}
 
 
 
