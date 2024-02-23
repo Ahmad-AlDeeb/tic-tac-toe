@@ -188,16 +188,16 @@ bool check_winning() {
         }
     }
     // Check left diagonal
-    if(grid[row_i[1]][col_i[1]]
-    == grid[row_i[2]][col_i[2]]
-    == grid[row_i[3]][col_i[3]]) {
+    if(grid[row_i[1]][col_i[1]] == player &&
+       grid[row_i[2]][col_i[2]] == player &&
+       grid[row_i[3]][col_i[3]] == player) {
         winner = turns%2;
         return true;
     }
     // Check right diagonal
-    if(grid[row_i[1]][col_i[3]]
-       == grid[row_i[2]][col_i[2]]
-       == grid[row_i[3]][col_i[1]]) {
+    if(grid[row_i[1]][col_i[3]] == player &&
+       grid[row_i[2]][col_i[2]] == player &&
+       grid[row_i[3]][col_i[1]] == player) {
         winner = turns%2;
         return true;
     }
