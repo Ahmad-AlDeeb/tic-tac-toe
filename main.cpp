@@ -26,7 +26,7 @@ void validate_input(int &row, int &col);
 bool check_cell(int row, int col);
 bool check_number(int row, int col);
 void mark_cell(int row, int col);
-bool get_status();
+bool check_winning();
 void display_results();
 void play_again();
 void lowercase_word(string word);
@@ -101,9 +101,9 @@ void start_game() {
         get_move(row,col);
         mark_cell(row, col);
 
-//        end_game = get_status();
-//        if(end_game)
-//            display_results();
+        end_game = check_winning();
+        if(end_game)
+            display_results();
     }
 }
 
@@ -160,7 +160,71 @@ void mark_cell(int row, int col) {
     refresh();
 }
 
+bool check_winning() {
+    char player = get_player();
 
+    // Check horizontally
+    for(int i{1}; i<=3; i++) {
+        bool winning {true};
+        for(int j{1}; j<=3; j++)
+            if(grid[row_i[i]][col_i[j]] != player)
+                winning = false;
+
+        if(winning) {
+            winner = turns%2;
+            return true;
+        }
+    }
+    // Check vertically
+    for(int j{1}; j<=3; j++) {
+        bool winning {true};
+        for(int i{1}; i<=3; i++)
+            if(grid[row_i[i]][col_i[j]] != player)
+                winning = false;
+
+        if(winning) {
+            winner = turns%2;
+            return true;
+        }
+    }
+    // Check left diagonal
+    if(grid[row_i[1]][col_i[1]]
+    == grid[row_i[2]][col_i[2]]
+    == grid[row_i[3]][col_i[3]]) {
+        winner = turns%2;
+        return true;
+    }
+    // Check right diagonal
+    if(grid[row_i[1]][col_i[3]]
+       == grid[row_i[2]][col_i[2]]
+       == grid[row_i[3]][col_i[1]]) {
+        winner = turns%2;
+        return true;
+    }
+
+    // Check if game is not finished (check if there's empty cell)
+    for(int i{1}; i<=3; i++)
+        for(int j{1}; j<=3; j++)
+            if(grid[row_i[i]][col_i[j]] != ' ')
+                return false;
+
+    // DRAW
+    winner = -1;
+    return true;
+}
+
+void display_results() {
+    if(winner == 0) {
+        cout << "The winner is player O !\n";
+        player_O_score++;
+    }
+    else if(winner == 1) {
+        cout << "The winner is player X !\n";
+        player_X_score++;
+    }
+    else cout << "DRAW !\n";
+    display_scores();
+}
 
 
 
