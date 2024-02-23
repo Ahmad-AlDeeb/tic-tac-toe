@@ -1,3 +1,7 @@
 # ninja log v5
 1	1087	7304174173906299	CMakeFiles/tic_tac_toe.dir/main.cpp.obj	71aa3524dc93146a
 1092	1252	7304174175496333	tic_tac_toe.exe	dbcd1dcc9ad6e011
+5	656	7304176289910957	CMakeFiles/tic_tac_toe.dir/main.cpp.obj	71aa3524dc93146a
+658	822	7304176291421002	tic_tac_toe.exe	dbcd1dcc9ad6e011
+6	1158	7304176378958021	CMakeFiles/tic_tac_toe.dir/main.cpp.obj	71aa3524dc93146a
+1160	1455	7304176381808850	tic_tac_toe.exe	dbcd1dcc9ad6e011
