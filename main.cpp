@@ -27,9 +27,8 @@ bool check_cell(int row, int col);
 bool check_number(int row, int col);
 void mark_cell(int row, int col);
 bool check_winning();
-void display_results();
-void play_again();
-void lowercase_word(string word);
+void display_winner();
+void restart_game();
 void refresh();
 
 //////////////////////////////////////////
@@ -96,14 +95,16 @@ void render_grid() {
 }
 
 void start_game() {
-    while(!end_game) {
+    while(true) {
         int row, col;
         get_move(row,col);
         mark_cell(row, col);
 
         end_game = check_winning();
-        if(end_game)
-            display_results();
+        if(end_game) {
+            display_winner();
+            restart_game();
+        }
     }
 }
 
@@ -205,7 +206,7 @@ bool check_winning() {
     // Check if game is not finished (check if there's empty cell)
     for(int i{1}; i<=3; i++)
         for(int j{1}; j<=3; j++)
-            if(grid[row_i[i]][col_i[j]] != ' ')
+            if(grid[row_i[i]][col_i[j]] == ' ')
                 return false;
 
     // DRAW
@@ -213,20 +214,29 @@ bool check_winning() {
     return true;
 }
 
-void display_results() {
+void display_winner() {
+    cout << "======================================================\n";
     if(winner == 0) {
-        cout << "The winner is player O !\n";
+        cout << "============ The winner is player O :-) ============\n";
         player_O_score++;
     }
     else if(winner == 1) {
-        cout << "The winner is player X !\n";
+        cout << "============= The winner is player X ^_^ =============\n";
         player_X_score++;
     }
-    else cout << "DRAW !\n";
-    display_scores();
+    else cout << "====================== DRAW :'( ======================\n";
 }
 
+void restart_game() {
+    // Remove O & X
+    for(int i{}; i<grid_rows; i++)
+        for(int j{}; j<grid_cols; j++)
+            if(grid[i][j] == 'O' || grid[i][j] == 'X')
+                grid[i][j] = ' ';
 
+    end_game = false;
+    refresh();
+}
 
 
 
