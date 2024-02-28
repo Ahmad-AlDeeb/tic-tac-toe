@@ -38,6 +38,7 @@ int main() {
 }
 
 void init_game() {
+    clear_console();
     build_grid();
 
     // Build maps from user input to grid index
@@ -76,9 +77,7 @@ void refresh() {
 }
 
 void clear_console() {
-//    for(int i{}; i<10; i++)
-//        cout << "\n\n\n\n\n\n\n\n\n\n";
-    cout << "======================================================\n";
+    system("cls");
 }
 
 void display_scores() {
@@ -95,7 +94,7 @@ void render_grid() {
 }
 
 void start_game() {
-    while(true) {
+    while(!end_game) {
         int row, col;
         get_move(row,col);
         mark_cell(row, col);
@@ -121,6 +120,9 @@ void get_move(int &row, int &col) {
 
 void validate_input(int &row, int &col) {
     while(!check_number(row, col) || !check_cell(row, col)) {
+        refresh();
+
+        cout << "Player " << get_player() << " turn" << endl;
         if(!check_number(row, col))
             cout << "Error! Please enter valid numbers (1, 2, 3).\n";
         else if(!check_cell(row, col))
@@ -217,7 +219,7 @@ bool check_winning() {
 void display_winner() {
     cout << "======================================================\n";
     if(winner == 0) {
-        cout << "============ The winner is player O :-) ============\n";
+        cout << "============= The winner is player O :-) =============\n";
         player_O_score++;
     }
     else if(winner == 1) {
@@ -225,15 +227,31 @@ void display_winner() {
         player_X_score++;
     }
     else cout << "====================== DRAW :'( ======================\n";
+    cout << "======================================================\n";
 }
 
 void restart_game() {
+    cout << "Play again?\n";
+    cout << "1. Yes\n";
+    cout << "2. No\n";
+    cout << "Enter 1 to continue, or 2 to exit: ";
+
+    int answer;
+    cin >> answer;
+    while(answer != 1 && answer != 2) {
+        cout << "Error! Invalid choice, try again\n";
+        cout << "Enter 1 to continue, or 2 to exit: ";
+        cin >> answer;
+    }
+    // End game if answer is 2 (NO)
+    if(answer == 2) return;
+
+
     // Remove O & X
     for(int i{}; i<grid_rows; i++)
         for(int j{}; j<grid_cols; j++)
             if(grid[i][j] == 'O' || grid[i][j] == 'X')
                 grid[i][j] = ' ';
-
     end_game = false;
     refresh();
 }
