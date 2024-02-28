@@ -64,7 +64,7 @@ void build_grid() {
 
     // Inserting all rows --> |   |   |   |
     for(int i{1}; i<grid_rows; i+=2)
-        for(int j{}; j<grid_cols; j+=2) {
+        for(int j{}; j<grid_cols; j++) {
             if(j%4) grid[i][j] = ' ';
             else    grid[i][j] = '|';
         }
